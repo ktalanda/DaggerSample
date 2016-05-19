@@ -1,9 +1,10 @@
-package example.com.daggersample;
+package example.com.daggersample.di;
 
 import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
+import example.com.daggersample.R;
 
 @Module
 public class AppModule {
