@@ -1,11 +1,12 @@
 package example.com.daggersample.di;
 
-import dagger.Component;
-import example.com.daggersample.MainActivity;
+import javax.inject.Singleton;
 
+import dagger.Component;
+
+@Singleton
 @Component(modules = {
-        UIModule.class
 })
 public interface AppComponent {
-    void inject(MainActivity activity);
+    MainActivityComponent plus(UIModule uiModule);
 }

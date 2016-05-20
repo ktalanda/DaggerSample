@@ -24,7 +24,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -38,6 +37,16 @@ public class MainActivity extends BaseActivity {
 
         voucherList.setLayoutManager(new LinearLayoutManager(this));
         voucherList.setAdapter(voucherAdapter);
+    }
+
+    @Override
+    public void injectDependencies() {
+        ((MainApplication) getApplication()).createMainActivityComponent(this).inject(this);
+    }
+
+    @Override
+    public void resetDependencies() {
+        ((MainApplication) getApplication()).releaseMainActivityComponent();
     }
 
     @Override

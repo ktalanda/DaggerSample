@@ -1,6 +1,6 @@
 package example.com.daggersample.di;
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -11,15 +11,15 @@ import example.com.daggersample.di.qualifier.VoucherViewQualifier;
 
 @Module
 public class UIModule {
-    private final Context context;
+    private final Activity activity;
 
-    public UIModule(Context context) {
-        this.context = context;
+    public UIModule(Activity activity) {
+        this.activity = activity;
     }
 
     @Provides
     @VoucherViewQualifier
     View provideVoucherViewHolder() {
-        return LayoutInflater.from(context).inflate(R.layout.view_voucher, null, true);
+        return LayoutInflater.from(activity).inflate(R.layout.view_voucher, null, true);
     }
 }
