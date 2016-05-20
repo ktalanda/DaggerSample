@@ -15,9 +15,6 @@ import example.com.daggersample.domain.Voucher;
 public class MainActivity extends BaseActivity {
 
     @Inject
-    String appName;
-
-    @Inject
     VoucherAdapter voucherAdapter;
 
     @BindView(R.id.voucher_list)
