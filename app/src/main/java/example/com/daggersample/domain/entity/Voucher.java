@@ -11,6 +11,15 @@ import lombok.Data;
 @Data
 public class Voucher {
 
+    String code;
+    String campain;
+    String category;
+    Date startDate;
+    Date expirationDate;
+    boolean active;
+    String additionalInfo;
+    String metadata;
+
     public Voucher() {
     }
 
@@ -20,22 +29,13 @@ public class Voucher {
 
     public Voucher(VoucherDTO dto) {
         this.code = dto.getCode();
-//        this.campain = dto.getCampain();
-//        this.category = dto.getCategory();
-//        this.startDate = dto.getStartDate();
-//        this.expirationDate = dto.getExpirationDate();
-//        this.active = dto.isActive();
-//        this.additionalInfo = dto.getAdditionalInfo();
-//        this.metadata = dto.getMetadata();
+        this.campain = dto.getCampain();
+        this.category = dto.getCategory();
+        this.startDate = dto.getStartDate();
+        this.expirationDate = dto.getExpirationDate();
+        this.active = dto.isActive();
+        this.additionalInfo = dto.getAdditionalInfo();
+        this.metadata = dto.getMetadata();
     }
-
-    String code;
-    String campain;
-    String category;
-    Date startDate;
-    Date expirationDate;
-    boolean active;
-    String additionalInfo;
-    String metadata;
 
 }

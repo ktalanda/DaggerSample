@@ -1,7 +1,7 @@
 package example.com.daggersample.di;
 
 import dagger.Subcomponent;
-import example.com.daggersample.MainActivity;
+import example.com.daggersample.ui.MainActivity;
 import example.com.daggersample.di.scope.PerActivity;
 
 @PerActivity

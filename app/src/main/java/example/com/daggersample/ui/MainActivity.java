@@ -1,4 +1,4 @@
-package example.com.daggersample;
+package example.com.daggersample.ui;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import example.com.daggersample.MainApplication;
+import example.com.daggersample.R;
 import example.com.daggersample.domain.entity.Voucher;
 import example.com.daggersample.presenter.MainPresenter;
 import retrofit2.Retrofit;

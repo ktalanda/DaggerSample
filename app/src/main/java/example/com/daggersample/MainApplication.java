@@ -7,6 +7,7 @@ import example.com.daggersample.di.AppComponent;
 import example.com.daggersample.di.DaggerAppComponent;
 import example.com.daggersample.di.MainActivityComponent;
 import example.com.daggersample.di.UIModule;
+import example.com.daggersample.ui.MainActivity;
 import timber.log.Timber;
 
 public class MainApplication extends Application {

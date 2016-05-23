@@ -1,4 +1,4 @@
-package example.com.daggersample;
+package example.com.daggersample.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

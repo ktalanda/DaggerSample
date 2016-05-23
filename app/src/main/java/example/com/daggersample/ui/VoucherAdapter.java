@@ -1,4 +1,4 @@
-package example.com.daggersample;
+package example.com.daggersample.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
