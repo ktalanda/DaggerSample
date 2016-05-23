@@ -7,6 +7,7 @@ import example.com.daggersample.di.AppComponent;
 import example.com.daggersample.di.DaggerAppComponent;
 import example.com.daggersample.di.MainActivityComponent;
 import example.com.daggersample.di.UIModule;
+import timber.log.Timber;
 
 public class MainApplication extends Application {
     private AppComponent appComponent;
@@ -15,6 +16,7 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Timber.plant(new Timber.DebugTree());
         appComponent = DaggerAppComponent.builder()
                 .build();
     }

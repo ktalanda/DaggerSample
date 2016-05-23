@@ -1,8 +1,6 @@
 package example.com.daggersample;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -11,15 +9,19 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import example.com.daggersample.domain.Voucher;
+import example.com.daggersample.di.scope.PerActivity;
+import example.com.daggersample.domain.entity.Voucher;
 import lombok.Getter;
+import lombok.Setter;
 
+@PerActivity
 public class VoucherAdapter extends RecyclerView.Adapter<VoucherViewHolder> {
 
     @Inject
     Provider<VoucherViewHolder> voucherViewHolderProvider;
 
     @Getter
+    @Setter
     List<Voucher> data = new ArrayList<>();
 
     @Inject
@@ -28,8 +30,8 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherViewHolder> {
 
     @Override
     public VoucherViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_voucher, parent, false);
-        return new VoucherViewHolder(v);
+        VoucherViewHolder vh = voucherViewHolderProvider.get();
+        return vh;
     }
 
     @Override
@@ -39,6 +41,6 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherViewHolder> {
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data == null ? 0 : data.size();
     }
 }

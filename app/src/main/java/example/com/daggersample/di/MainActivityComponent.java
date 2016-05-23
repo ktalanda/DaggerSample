@@ -6,7 +6,8 @@ import example.com.daggersample.di.scope.PerActivity;
 
 @PerActivity
 @Subcomponent(modules = {
-        UIModule.class
+        UIModule.class,
+        NetworkModule.class
 })
 public interface MainActivityComponent {
     void inject(MainActivity activity);

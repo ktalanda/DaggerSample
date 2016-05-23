@@ -5,20 +5,30 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import example.com.daggersample.domain.Voucher;
+import example.com.daggersample.domain.entity.Voucher;
+import example.com.daggersample.presenter.MainPresenter;
+import retrofit2.Retrofit;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements MainPresenter.ViewInterface {
 
     @Inject
     VoucherAdapter voucherAdapter;
 
+    @Inject
+    Retrofit retrofit;
+
     @BindView(R.id.voucher_list)
     RecyclerView voucherList;
+
+    @Inject
+    MainPresenter mainPresenter;
 
     Unbinder unbinder;
 
@@ -30,13 +40,18 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         unbinder = ButterKnife.bind(this);
 
-        voucherAdapter.getData().add(new Voucher("first"));
-        voucherAdapter.getData().add(new Voucher("second"));
-        voucherAdapter.getData().add(new Voucher("third"));
-        voucherAdapter.getData().add(new Voucher("fourth"));
+        mainPresenter.bind(this);
+
+        mainPresenter.getVoucherList();
 
         voucherList.setLayoutManager(new LinearLayoutManager(this));
         voucherList.setAdapter(voucherAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainPresenter.unbind();
     }
 
     @Override
@@ -53,5 +68,11 @@ public class MainActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         unbinder.unbind();
+    }
+
+    @Override
+    public void fillUpVoucherList(List<Voucher> list) {
+        voucherAdapter.setData(list);
+        voucherAdapter.notifyDataSetChanged();
     }
 }

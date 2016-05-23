@@ -3,6 +3,7 @@ package example.com.daggersample.di;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import dagger.Module;
 import dagger.Provides;
@@ -18,8 +19,13 @@ public class UIModule {
     }
 
     @Provides
+    LayoutInflater provideLayoutInflater() {
+        return LayoutInflater.from(activity);
+    }
+
+    @Provides
     @VoucherViewQualifier
-    View provideVoucherViewHolder() {
-        return LayoutInflater.from(activity).inflate(R.layout.view_voucher, null, true);
+    View provideVoucherViewHolder(LayoutInflater layoutInflater) {
+        return layoutInflater.inflate(R.layout.view_voucher, (ViewGroup) activity.findViewById(R.id.voucher_main), false);
     }
 }
