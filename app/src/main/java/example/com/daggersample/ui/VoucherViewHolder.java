@@ -18,9 +18,6 @@ public class VoucherViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.voucher_name)
     TextView name;
 
-    @BindView(R.id.voucher_main)
-    View main;
-
     @Inject
     Retrofit retrofit;
 

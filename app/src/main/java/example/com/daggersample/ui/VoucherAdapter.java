@@ -30,8 +30,7 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherViewHolder> {
 
     @Override
     public VoucherViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        VoucherViewHolder vh = voucherViewHolderProvider.get();
-        return vh;
+        return voucherViewHolderProvider.get();
     }
 
     @Override

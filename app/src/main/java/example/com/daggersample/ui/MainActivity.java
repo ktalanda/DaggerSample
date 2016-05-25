@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,6 +29,8 @@ public class MainActivity extends BaseActivity implements MainPresenter.ViewInte
 
     @BindView(R.id.voucher_list)
     RecyclerView voucherList;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Inject
     MainPresenter mainPresenter;
@@ -38,22 +41,21 @@ public class MainActivity extends BaseActivity implements MainPresenter.ViewInte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         unbinder = ButterKnife.bind(this);
-
         mainPresenter.bind(this);
 
-        mainPresenter.getVoucherList();
+        setSupportActionBar(toolbar);
 
         voucherList.setLayoutManager(new LinearLayoutManager(this));
         voucherList.setAdapter(voucherAdapter);
+        mainPresenter.getVoucherList();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mainPresenter.unbind();
+        unbinder.unbind();
     }
 
     @Override
@@ -64,12 +66,6 @@ public class MainActivity extends BaseActivity implements MainPresenter.ViewInte
     @Override
     public void resetDependencies() {
         ((MainApplication) getApplication()).releaseMainActivityComponent();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        unbinder.unbind();
     }
 
     @Override
