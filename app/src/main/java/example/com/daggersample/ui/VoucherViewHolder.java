@@ -11,15 +11,19 @@ import butterknife.ButterKnife;
 import example.com.daggersample.R;
 import example.com.daggersample.di.qualifier.VoucherViewQualifier;
 import example.com.daggersample.domain.entity.Voucher;
-import retrofit2.Retrofit;
+import example.com.daggersample.domain.usecase.RetrieveVoucherUseCase;
+import example.com.daggersample.presenter.MainPresenter;
 
 public class VoucherViewHolder extends RecyclerView.ViewHolder {
+
+    @BindView(R.id.voucher_layout)
+    View layout;
 
     @BindView(R.id.voucher_name)
     TextView name;
 
     @Inject
-    Retrofit retrofit;
+    MainPresenter mainPresenter;
 
     @Inject
     public VoucherViewHolder(@VoucherViewQualifier View itemView) {
@@ -29,6 +33,7 @@ public class VoucherViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final Voucher voucher) {
         name.setText(voucher.getCode());
+        layout.setOnClickListener(v -> mainPresenter.retrieveVoucher(voucher.getCode()));
     }
 
 }

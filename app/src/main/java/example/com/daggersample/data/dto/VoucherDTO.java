@@ -10,7 +10,7 @@ import lombok.Data;
 @Parcel
 public class VoucherDTO {
     String code;
-    String campain;
+    String campaign;
     String category;
     Date startDate;
     Date expirationDate;

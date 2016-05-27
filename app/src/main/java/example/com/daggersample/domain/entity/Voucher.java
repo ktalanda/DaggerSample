@@ -12,7 +12,7 @@ import lombok.Data;
 public class Voucher {
 
     String code;
-    String campain;
+    String campaign;
     String category;
     Date startDate;
     Date expirationDate;
@@ -29,7 +29,7 @@ public class Voucher {
 
     public Voucher(VoucherDTO dto) {
         this.code = dto.getCode();
-        this.campain = dto.getCampain();
+        this.campaign = dto.getCampaign();
         this.category = dto.getCategory();
         this.startDate = dto.getStartDate();
         this.expirationDate = dto.getExpirationDate();

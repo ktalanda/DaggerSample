@@ -9,7 +9,7 @@ import rx.Observable;
 
 public interface VoucherifyService {
     @GET("vouchers/{code}")
-    Observable<VoucherDTO> getVoucher(@Path("code") String code);
+    Observable<VoucherDTO> retrieveVoucher(@Path("code") String code);
 
     @GET("vouchers")
     Observable<List<VoucherDTO>> listVouchers();

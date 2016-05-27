@@ -1,5 +1,6 @@
 package example.com.daggersample.di;
 
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,5 +35,10 @@ public class UIModule {
     @VoucherViewQualifier
     View provideVoucherViewHolder(LayoutInflater layoutInflater, @VoucherViewParentQualifier ViewGroup parent) {
         return layoutInflater.inflate(R.layout.view_voucher, parent, false);
+    }
+
+    @Provides
+    AlertDialog.Builder provideAlertDialogBuilder() {
+        return  new  AlertDialog.Builder(activity);
     }
 }
