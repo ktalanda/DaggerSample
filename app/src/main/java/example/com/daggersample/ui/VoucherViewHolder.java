@@ -11,7 +11,6 @@ import butterknife.ButterKnife;
 import example.com.daggersample.R;
 import example.com.daggersample.di.qualifier.VoucherViewQualifier;
 import example.com.daggersample.domain.entity.Voucher;
-import example.com.daggersample.domain.usecase.RetrieveVoucherUseCase;
 import example.com.daggersample.presenter.MainPresenter;
 
 public class VoucherViewHolder extends RecyclerView.ViewHolder {
