@@ -5,7 +5,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -81,8 +84,24 @@ public class MainActivity extends BaseActivity implements MainPresenter.ViewInte
 
     @Override
     public void showVoucherDetails(Voucher voucher) {
+
+        final ListView listView = new ListView(this);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        List<String> list = new ArrayList<>();
+        addToList(list, "Campaign",  voucher.getCampaign());
+        addToList(list, "Category",  voucher.getCategory());
+        addToList(list, "Discount",  voucher.getDiscount().toString());
+        addToList(list, "Additional info",  voucher.getAdditionalInfo());
+        addToList(list, "Start date",  voucher.getStartDate());
+        addToList(list, "End date",  voucher.getExpirationDate());
+        addToList(list, "Metadata",  voucher.getMetadata());
+
+        adapter.addAll(list);
+        listView.setAdapter(adapter);
+
         alertDialogBuilderProvider.get()
-                .setTitle(voucher.getCampaign())
+                .setTitle(voucher.getCode())
+                .setView(listView)
                 .setPositiveButton("ADD", (dialog, which) -> {
                     dialog.cancel();
                 })
@@ -90,6 +109,12 @@ public class MainActivity extends BaseActivity implements MainPresenter.ViewInte
                     dialog.cancel();
                 })
                 .show();
+    }
+
+    private void addToList(List<String> list, String title, Object element) {
+        if (element != null) {
+            list.add(title + ": " + element.toString());
+        }
     }
 
     @OnClick(R.id.fab_add)

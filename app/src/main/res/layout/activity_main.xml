@@ -24,7 +24,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/voucher_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add"
