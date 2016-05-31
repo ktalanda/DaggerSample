@@ -1,8 +1,8 @@
 package example.com.daggersample.di;
 
 import dagger.Subcomponent;
-import example.com.daggersample.ui.MainActivity;
 import example.com.daggersample.di.scope.PerActivity;
+import example.com.daggersample.ui.MainActivity;
 
 @PerActivity
 @Subcomponent(modules = {
