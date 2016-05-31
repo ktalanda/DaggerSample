@@ -1,5 +1,6 @@
 package example.com.daggersample.presenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,7 +40,26 @@ public class MainPresenter extends BasePresenter<MainPresenter.ViewInterface>{
         retrieveVoucherUseCase.execute(code)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(view::showVoucherDetails);
+                .subscribe(this::prepareVoucherList);
+    }
+
+    private void prepareVoucherList(Voucher voucher) {
+        List<String> list = new ArrayList<>();
+        addToList(list, "Active",  voucher.isActive());
+        addToList(list, "Campaign",  voucher.getCampaign());
+        addToList(list, "Category",  voucher.getCategory());
+        addToList(list, "Discount",  voucher.getDiscount().toString());
+        addToList(list, "Additional info",  voucher.getAdditionalInfo());
+        addToList(list, "Start date",  voucher.getStartDate());
+        addToList(list, "End date",  voucher.getExpirationDate());
+        addToList(list, "Metadata",  voucher.getMetadata());
+        view.showVoucherDetails(voucher.getCode(), list);
+    }
+
+    private void addToList(List<String> list, String title, Object element) {
+        if (element != null) {
+            list.add(title + ": " + element.toString());
+        }
     }
 
     private void errorHandler(Throwable throwable) {
@@ -48,7 +68,7 @@ public class MainPresenter extends BasePresenter<MainPresenter.ViewInterface>{
 
     public interface ViewInterface {
         void fillUpVoucherList(List<Voucher> list);
-        void showVoucherDetails(Voucher voucher);
+        void showVoucherDetails(String title, List<String> voucherDetails);
     }
 
 }

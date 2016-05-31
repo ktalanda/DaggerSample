@@ -31,10 +31,10 @@ public class Voucher {
         this.campaign = dto.getCampaign();
         this.category = dto.getCategory();
         this.discount = new Discount(dto.getDiscount());
-        this.startDate = dto.getStartDate();
-        this.expirationDate = dto.getExpirationDate();
+        this.startDate = dto.getStart_date();
+        this.expirationDate = dto.getExpiration_date();
         this.active = dto.isActive();
-        this.additionalInfo = dto.getAdditionalInfo();
+        this.additionalInfo = dto.getAdditional_info();
         this.metadata = dto.getMetadata();
     }
 

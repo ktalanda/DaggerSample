@@ -1,19 +1,16 @@
 package example.com.daggersample.data.dto;
 
-import org.parceler.Parcel;
-
 import lombok.Data;
 
 @Data
-@Parcel
 public class VoucherDTO {
     String code;
     String campaign;
     String category;
     DiscountDTO discount;
-    String startDate;
-    String expirationDate;
+    String start_date;
+    String expiration_date;
     boolean active;
-    String additionalInfo;
+    String additional_info;
     String metadata;
 }
