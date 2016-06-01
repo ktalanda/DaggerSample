@@ -1,4 +1,4 @@
-package example.com.daggersample.di;
+package example.com.daggersample.di.module;
 
 import dagger.Module;
 import dagger.Provides;

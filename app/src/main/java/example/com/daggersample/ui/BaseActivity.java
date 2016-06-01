@@ -20,4 +20,5 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract void injectDependencies();
     public abstract void resetDependencies();
+
 }

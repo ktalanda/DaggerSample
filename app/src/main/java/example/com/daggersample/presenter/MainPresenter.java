@@ -63,6 +63,10 @@ public class MainPresenter extends BasePresenter<MainPresenter.ViewInterface>{
                         });
     }
 
+    public void logout() {
+        view.logout();
+    }
+
     private void prepareVoucherList(Voucher voucher) {
         List<String> list = new ArrayList<>();
         addToList(list, "Active",  voucher.isActive());
@@ -89,6 +93,7 @@ public class MainPresenter extends BasePresenter<MainPresenter.ViewInterface>{
     public interface ViewInterface {
         void fillUpVoucherList(List<Voucher> list);
         void showVoucherDetails(String title, List<String> voucherDetails);
+        void logout();
     }
 
 }

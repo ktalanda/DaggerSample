@@ -1,5 +1,6 @@
 package example.com.daggersample.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,17 +21,14 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import example.com.daggersample.MainApplication;
 import example.com.daggersample.R;
+import example.com.daggersample.di.module.IntentModule;
+import example.com.daggersample.di.module.MainActivityModule;
+import example.com.daggersample.di.module.UIModule;
+import example.com.daggersample.di.qualifier.LoginIntent;
 import example.com.daggersample.domain.entity.Voucher;
 import example.com.daggersample.presenter.MainPresenter;
-import retrofit2.Retrofit;
 
 public class MainActivity extends BaseActivity implements MainPresenter.ViewInterface {
-
-    @Inject
-    VoucherAdapter voucherAdapter;
-
-    @Inject
-    Retrofit retrofit;
 
     @BindView(R.id.voucher_list)
     RecyclerView voucherList;
@@ -38,10 +36,14 @@ public class MainActivity extends BaseActivity implements MainPresenter.ViewInte
     Toolbar toolbar;
 
     @Inject
+    VoucherAdapter voucherAdapter;
+    @Inject
     MainPresenter mainPresenter;
-
     @Inject
     Provider<AlertDialog.Builder> alertDialogBuilderProvider;
+    @Inject
+    @LoginIntent
+    Intent loginIntent;
 
     Unbinder unbinder;
 
@@ -68,12 +70,36 @@ public class MainActivity extends BaseActivity implements MainPresenter.ViewInte
 
     @Override
     public void injectDependencies() {
-        ((MainApplication) getApplication()).createMainActivityComponent(this).inject(this);
+        MainApplication.get(this)
+                .getUserComponent()
+                .plus(new MainActivityModule(this), new UIModule(this), new IntentModule(this))
+                .inject(this);
     }
 
     @Override
     public void resetDependencies() {
-        ((MainApplication) getApplication()).releaseMainActivityComponent();
+    }
+
+    @OnClick(R.id.fab_add)
+    public void onFabClick() {
+        final EditText editText = new EditText(this);
+
+        alertDialogBuilderProvider.get()
+                .setTitle("Voucher Code")
+                .setView(editText)
+                .setPositiveButton("ADD", (dialog, which) -> {
+                    mainPresenter.createVoucher(editText.getText().toString());
+                    dialog.cancel();
+                })
+                .setNegativeButton("CLOSE", (dialog, which) -> {
+                    dialog.cancel();
+                })
+                .show();
+    }
+
+    @OnClick(R.id.fab_logout)
+    public void onLogoutClick() {
+        mainPresenter.logout();
     }
 
     @Override
@@ -99,20 +125,9 @@ public class MainActivity extends BaseActivity implements MainPresenter.ViewInte
                 .show();
     }
 
-    @OnClick(R.id.fab_add)
-    public void onFabClick() {
-        final EditText editText = new EditText(this);
-
-        alertDialogBuilderProvider.get()
-                .setTitle("Voucher Code")
-                .setView(editText)
-                .setPositiveButton("ADD", (dialog, which) -> {
-                    mainPresenter.createVoucher(editText.getText().toString());
-                    dialog.cancel();
-                })
-                .setNegativeButton("CLOSE", (dialog, which) -> {
-                    dialog.cancel();
-                })
-                .show();
+    @Override
+    public void logout() {
+        MainApplication.get(this).releaseUserComponent();
+        finish();
     }
 }

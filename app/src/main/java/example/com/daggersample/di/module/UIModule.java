@@ -1,4 +1,4 @@
-package example.com.daggersample.di;
+package example.com.daggersample.di.module;
 
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
