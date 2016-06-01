@@ -10,6 +10,9 @@ import lombok.Data;
 public class Discount {
     String type;
     long amount_off;
+
+
+    
     long percent_off;
 
     public Discount() {
@@ -19,6 +22,14 @@ public class Discount {
         this.type = dto.getType();
         this.amount_off = dto.getAmount_off();
         this.percent_off = dto.getPercent_off();
+    }
+
+    public DiscountDTO toDto() {
+        DiscountDTO dto = new DiscountDTO();
+        dto.setType(this.getType());
+        dto.setAmount_off(this.getAmount_off());
+        dto.setPercent_off(this.getPercent_off());
+        return dto;
     }
 
     @Override

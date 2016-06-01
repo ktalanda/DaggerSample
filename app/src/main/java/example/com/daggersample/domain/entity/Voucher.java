@@ -38,4 +38,18 @@ public class Voucher {
         this.metadata = dto.getMetadata();
     }
 
+    public VoucherDTO toDto() {
+        VoucherDTO dto = new VoucherDTO();
+        dto.setCode(this.code);
+        dto.setCampaign(this.campaign);
+        dto.setCategory(this.category);
+        dto.setDiscount(this.discount.toDto());
+        dto.setStart_date(this.startDate);
+        dto.setExpiration_date(this.expirationDate);
+        dto.setActive(this.active);
+        dto.setAdditional_info(this.additionalInfo);
+        dto.setMetadata(this.metadata);
+        return dto;
+    }
+
 }

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.List;
@@ -92,10 +93,7 @@ public class MainActivity extends BaseActivity implements MainPresenter.ViewInte
         alertDialogBuilderProvider.get()
                 .setTitle(title)
                 .setView(listView)
-                .setPositiveButton("ADD", (dialog, which) -> {
-                    dialog.cancel();
-                })
-                .setNegativeButton("CANCEL", (dialog, which) -> {
+                .setNegativeButton("CLOSE", (dialog, which) -> {
                     dialog.cancel();
                 })
                 .show();
@@ -103,7 +101,18 @@ public class MainActivity extends BaseActivity implements MainPresenter.ViewInte
 
     @OnClick(R.id.fab_add)
     public void onFabClick() {
+        final EditText editText = new EditText(this);
 
-
+        alertDialogBuilderProvider.get()
+                .setTitle("Voucher Code")
+                .setView(editText)
+                .setPositiveButton("ADD", (dialog, which) -> {
+                    mainPresenter.createVoucher(editText.getText().toString());
+                    dialog.cancel();
+                })
+                .setNegativeButton("CLOSE", (dialog, which) -> {
+                    dialog.cancel();
+                })
+                .show();
     }
 }

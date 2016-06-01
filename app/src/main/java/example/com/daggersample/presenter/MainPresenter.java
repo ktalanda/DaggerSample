@@ -1,12 +1,16 @@
 package example.com.daggersample.presenter;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import example.com.daggersample.di.scope.PerActivity;
+import example.com.daggersample.domain.entity.Discount;
 import example.com.daggersample.domain.entity.Voucher;
+import example.com.daggersample.domain.usecase.CreateVoucherUseCase;
 import example.com.daggersample.domain.usecase.GetVoucherListUseCase;
 import example.com.daggersample.domain.usecase.RetrieveVoucherUseCase;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,6 +25,9 @@ public class MainPresenter extends BasePresenter<MainPresenter.ViewInterface>{
 
     @Inject
     RetrieveVoucherUseCase retrieveVoucherUseCase;
+
+    @Inject
+    CreateVoucherUseCase createVoucherUseCase;
 
     @Inject
     public MainPresenter(){
@@ -41,6 +48,19 @@ public class MainPresenter extends BasePresenter<MainPresenter.ViewInterface>{
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::prepareVoucherList);
+    }
+
+    public void createVoucher(String campaign) {
+        Discount discount = new Discount();
+        discount.setType("AMOUNT");
+        discount.setAmount_off(10);
+        createVoucherUseCase.execute(discount)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::prepareVoucherList,
+                        throwable -> {
+                            Log.e("KAMIL", "createVoucher: ", throwable);
+                        });
     }
 
     private void prepareVoucherList(Voucher voucher) {
