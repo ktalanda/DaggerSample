@@ -1,29 +1,31 @@
 package example.com.daggersample.ui;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import example.com.daggersample.R;
+import example.com.daggersample.di.ActivityComponent;
 import lombok.Getter;
 import lombok.Setter;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
+    private ActivityComponent activityComponent;
+
     @Getter
     @Setter
     private List<String> data;
 
-    public ItemAdapter() {
-        this.data = new ArrayList<>();
+    public ItemAdapter(MainActivity mainActivity) {
+        activityComponent = ActivityComponent.getInstance(mainActivity);
+        this.data = activityComponent
+                .getStringList();
     }
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_item, parent, false));
+        return activityComponent.getViewHolder();
     }
 
     @Override

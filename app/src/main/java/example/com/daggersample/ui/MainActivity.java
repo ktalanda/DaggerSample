@@ -2,7 +2,6 @@ package example.com.daggersample.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
@@ -13,6 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import example.com.daggersample.R;
+import example.com.daggersample.di.ActivityComponent;
 import example.com.daggersample.presenter.MainPresenter;
 
 public class MainActivity extends AppCompatActivity implements MainPresenter.ViewInterface {
@@ -22,9 +22,11 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @BindView(R.id.list)
     RecyclerView recyclerView;
 
-    MainPresenter mainPresenter;
+    ActivityComponent activityComponent;
 
+    MainPresenter mainPresenter;
     ItemAdapter adapter;
+    RecyclerView.LayoutManager layoutManager;
 
     Unbinder unbinder;
 
@@ -33,11 +35,17 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
+        activityComponent = ActivityComponent.getInstance(this);
 
-        mainPresenter = new MainPresenter();
+        mainPresenter = activityComponent
+                .getMainPresenter();
+        adapter = activityComponent
+                .getItemAdapter();
+        layoutManager = activityComponent
+                .getLayoutManager();
+
         mainPresenter.bind(this);
-        adapter = new ItemAdapter();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
         setSupportActionBar(toolbar);
@@ -52,14 +60,23 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
 
     @OnClick(R.id.fab_add)
     public void onFabClick() {
-        adapter.getData().add("test_" + adapter.getData().size());
-        adapter.notifyDataSetChanged();
+        mainPresenter.addToList("test_" + adapter.getData().size());
     }
 
     @OnClick(R.id.fab_clear)
     public void onFabClearClick() {
-        adapter.setData(new ArrayList<>());
+        mainPresenter.clearList();
+    }
+
+    @Override
+    public void addToList(String item) {
+        adapter.getData().add(item);
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void clearList() {
+        adapter.setData(new ArrayList<>());
+        adapter.notifyDataSetChanged();
+    }
 }
