@@ -22,8 +22,6 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @BindView(R.id.list)
     RecyclerView recyclerView;
 
-    ActivityComponent activityComponent;
-
     MainPresenter mainPresenter;
     ItemAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
@@ -35,14 +33,9 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
-        activityComponent = ActivityComponent.getInstance(this);
 
-        mainPresenter = activityComponent
-                .getMainPresenter();
-        adapter = activityComponent
-                .getItemAdapter();
-        layoutManager = activityComponent
-                .getLayoutManager();
+        ActivityComponent.getInstance(this)
+                .inject(this);
 
         mainPresenter.bind(this);
         recyclerView.setLayoutManager(layoutManager);

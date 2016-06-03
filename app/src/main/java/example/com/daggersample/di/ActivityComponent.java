@@ -13,10 +13,13 @@ import example.com.daggersample.presenter.MainPresenter;
 import example.com.daggersample.ui.ItemAdapter;
 import example.com.daggersample.ui.ItemViewHolder;
 import example.com.daggersample.ui.MainActivity;
+import example.com.daggersample.ui.MainActivityInjector;
 
 public class ActivityComponent {
 
     private MainActivity mainActivity;
+
+    private MainActivityInjector mainActivityInjector;
 
     private static ActivityComponent applicationComponent;
 
@@ -25,6 +28,7 @@ public class ActivityComponent {
 
     private ActivityComponent(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        this.mainActivityInjector = new MainActivityInjector();
     }
 
     public static ActivityComponent getInstance(MainActivity context) {
@@ -50,6 +54,10 @@ public class ActivityComponent {
 
     public RecyclerView.LayoutManager getLayoutManager() {
         return new LinearLayoutManager(mainActivity);
+    }
+
+    public void inject(MainActivity mainActivity){
+        mainActivityInjector.injectMembers(mainActivity);
     }
 
     public ItemViewHolder getViewHolder() {
