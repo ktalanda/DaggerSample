@@ -52,14 +52,23 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
 
     @OnClick(R.id.fab_add)
     public void onFabClick() {
-        adapter.getData().add("test_" + adapter.getData().size());
-        adapter.notifyDataSetChanged();
+        mainPresenter.addToList("test_" + adapter.getData().size());
     }
 
     @OnClick(R.id.fab_clear)
     public void onFabClearClick() {
-        adapter.setData(new ArrayList<>());
+        mainPresenter.clearList();
+    }
+
+    @Override
+    public void addToList(String item) {
+        adapter.getData().add(item);
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void clearList() {
+        adapter.setData(new ArrayList<>());
+        adapter.notifyDataSetChanged();
+    }
 }

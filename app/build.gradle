@@ -29,14 +29,11 @@ android {
 }
 
 final SUPPORT_VERSION = '23.4.0'
-final DAGGER_VERSION = '2.4'
 final RUNNER_VERSION = '0.5'
 final ESPRESSO_VERSION = '2.2.2'
 final UIAUTOMATOR_VERSION = '2.1.2'
 final BUTTERKNIFE_VERSION = '8.0.1'
 final LOMBOK_VERSION = '1.16.8'
-final RETROFIT_VERSION = '2.0.2'
-final GSONCONVERTER_VERSION = '2.0.0-beta3'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -49,22 +46,6 @@ dependencies {
 
     compile "com.jakewharton:butterknife:${BUTTERKNIFE_VERSION}"
     apt "com.jakewharton:butterknife-compiler:${BUTTERKNIFE_VERSION}"
-
-    compile 'com.jakewharton.timber:timber:4.1.2'
-
-    compile "com.squareup.retrofit2:retrofit:${RETROFIT_VERSION}"
-
-    compile "com.squareup.retrofit2:converter-gson:${GSONCONVERTER_VERSION}"
-    compile "com.squareup.retrofit2:adapter-rxjava:${RETROFIT_VERSION}"
-
-    compile "com.google.dagger:dagger:${DAGGER_VERSION}"
-    apt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
-
-    compile 'io.reactivex:rxjava:1.1.5'
-    compile 'io.reactivex:rxandroid:1.2.0'
-
-    compile 'org.parceler:parceler-api:1.1.4'
-    apt 'org.parceler:parceler:1.1.4'
 
     provided "org.projectlombok:lombok:${LOMBOK_VERSION}"
     provided 'javax.annotation:jsr250-api:1.0'
