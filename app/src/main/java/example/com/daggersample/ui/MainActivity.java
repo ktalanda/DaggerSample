@@ -7,12 +7,15 @@ import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import example.com.daggersample.R;
-import example.com.daggersample.di.ActivityComponent;
+import example.com.daggersample.di.ActivityModule;
+import example.com.daggersample.di.DaggerActivityComponent;
 import example.com.daggersample.presenter.MainPresenter;
 
 public class MainActivity extends AppCompatActivity implements MainPresenter.ViewInterface {
@@ -22,10 +25,13 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     @BindView(R.id.list)
     RecyclerView recyclerView;
 
-    ActivityComponent activityComponent;
-
+    @Inject
     MainPresenter mainPresenter;
+
+    @Inject
     ItemAdapter adapter;
+
+    @Inject
     RecyclerView.LayoutManager layoutManager;
 
     Unbinder unbinder;
@@ -35,14 +41,11 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
-        activityComponent = ActivityComponent.getInstance(this);
 
-        mainPresenter = activityComponent
-                .getMainPresenter();
-        adapter = activityComponent
-                .getItemAdapter();
-        layoutManager = activityComponent
-                .getLayoutManager();
+        DaggerActivityComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .build()
+                .inject(this);
 
         mainPresenter.bind(this);
         recyclerView.setLayoutManager(layoutManager);
