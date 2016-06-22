@@ -51,10 +51,17 @@ public class MainPresenter extends BasePresenter<MainPresenter.ViewInterface>{
     }
 
     public void createVoucher(String campaign) {
-        Discount discount = new Discount();
-        discount.setType("AMOUNT");
-        discount.setAmount_off(10);
-        createVoucherUseCase.execute(discount)
+        Discount discount =
+                Discount.builder()
+                        .type("AMOUNT")
+                        .amount_off(10L)
+                        .build();
+        Voucher voucher =
+                Voucher.builder()
+                        .category("New Category")
+                        .discount(discount)
+                        .build();
+        createVoucherUseCase.execute(voucher)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::prepareVoucherList,

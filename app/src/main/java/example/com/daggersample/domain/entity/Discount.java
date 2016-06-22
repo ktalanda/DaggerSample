@@ -3,17 +3,18 @@ package example.com.daggersample.domain.entity;
 import org.parceler.Parcel;
 
 import example.com.daggersample.data.dto.DiscountDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Parcel
+@Builder
+@AllArgsConstructor
 public class Discount {
     String type;
-    long amount_off;
-
-
-    
-    long percent_off;
+    Long amount_off;
+    Long percent_off;
 
     public Discount() {
     }
@@ -34,6 +35,13 @@ public class Discount {
 
     @Override
     public String toString() {
-        return type + " " + (amount_off == 0 ? percent_off : amount_off);
+        String result = type;
+        if (amount_off != null) {
+            result += amount_off;
+        }
+        if (percent_off != null) {
+            result += percent_off;
+        }
+        return result;
     }
 }

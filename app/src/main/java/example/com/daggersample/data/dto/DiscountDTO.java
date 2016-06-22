@@ -2,14 +2,18 @@ package example.com.daggersample.data.dto;
 
 import com.google.gson.annotations.Expose;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class DiscountDTO {
     @Expose
     String type;
     @Expose
-    long amount_off;
+    Long amount_off;
     @Expose
-    long percent_off;
+    Long percent_off;
 }

@@ -2,7 +2,6 @@ package example.com.daggersample.data;
 
 import java.util.List;
 
-import example.com.daggersample.data.dto.DiscountDTO;
 import example.com.daggersample.data.dto.VoucherDTO;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -18,6 +17,6 @@ public interface VoucherifyService {
     Observable<List<VoucherDTO>> listVouchers();
 
     @POST("vouchers")
-    Observable<VoucherDTO> createVoucher(@Body DiscountDTO voucherDTO);
+    Observable<VoucherDTO> createVoucher(@Body VoucherDTO voucherDTO);
 
 }

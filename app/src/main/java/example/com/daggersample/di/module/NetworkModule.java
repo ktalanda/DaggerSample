@@ -5,9 +5,12 @@ import dagger.Provides;
 import example.com.daggersample.data.AuthenticationInterceptor;
 import example.com.daggersample.data.VoucherifyService;
 import okhttp3.OkHttpClient;
-import retrofit2.GsonConverterFactory;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.CallAdapter;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.moshi.MoshiConverterFactory;
 
 @Module
 public class NetworkModule {
@@ -18,17 +21,35 @@ public class NetworkModule {
     }
 
     @Provides
-    OkHttpClient provideOkHttpClient(AuthenticationInterceptor authenticationInterceptor) {
+    HttpLoggingInterceptor provideHttpLoggingInterceptor() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return interceptor;
+    }
+
+    @Provides
+    OkHttpClient provideOkHttpClient(AuthenticationInterceptor authenticationInterceptor, HttpLoggingInterceptor loggingInterceptor) {
         return new OkHttpClient.Builder()
                 .addInterceptor(authenticationInterceptor)
+                .addInterceptor(loggingInterceptor)
                 .build();
     }
 
     @Provides
-    Retrofit provideRetrofit(OkHttpClient okHttpClient) {
+    Converter.Factory provideConverterFactory() {
+        return MoshiConverterFactory.create();
+    }
+
+    @Provides
+    CallAdapter.Factory provideCallAdapterFactory() {
+        return RxJavaCallAdapterFactory.create();
+    }
+
+    @Provides
+    Retrofit provideRetrofit(OkHttpClient okHttpClient, Converter.Factory converterFactory, CallAdapter.Factory callAdapterFactory) {
         return new Retrofit.Builder()
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(callAdapterFactory)
+                .addConverterFactory(converterFactory)
                 .baseUrl("https://api.voucherify.io/v1/")
                 .client(okHttpClient)
                 .build();

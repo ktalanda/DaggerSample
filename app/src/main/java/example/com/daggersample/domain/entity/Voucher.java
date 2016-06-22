@@ -3,10 +3,14 @@ package example.com.daggersample.domain.entity;
 import org.parceler.Parcel;
 
 import example.com.daggersample.data.dto.VoucherDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
-@Parcel
 @Data
+@Parcel
+@Builder
+@AllArgsConstructor
 public class Voucher {
 
     String code;
@@ -20,10 +24,6 @@ public class Voucher {
     String metadata;
 
     public Voucher() {
-    }
-
-    public Voucher(String code) {
-        this.code = code;
     }
 
     public Voucher(VoucherDTO dto) {

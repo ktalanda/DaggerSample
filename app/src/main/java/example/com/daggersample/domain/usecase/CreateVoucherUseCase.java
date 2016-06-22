@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import example.com.daggersample.data.VoucherifyService;
 import example.com.daggersample.di.scope.PerActivity;
-import example.com.daggersample.domain.entity.Discount;
 import example.com.daggersample.domain.entity.Voucher;
 import rx.Observable;
 
@@ -18,8 +17,8 @@ public class CreateVoucherUseCase {
     public CreateVoucherUseCase() {
     }
 
-    public Observable<Voucher> execute(Discount discount) {
-        return voucherifyService.createVoucher(discount.toDto())
+    public Observable<Voucher> execute(Voucher voucher) {
+        return voucherifyService.createVoucher(voucher.toDto())
                 .map(Voucher::new);
     }
 
